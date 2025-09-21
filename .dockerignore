@@ -1,0 +1,29 @@
+# Ignorar arquivos de build e cache
+**/bin/
+**/obj/
+**/out/
+**/.vs/
+
+# Ignorar arquivos do Git
+.git/
+.gitignore
+.gitattributes
+
+# Ignorar arquivos temporários
+**/*.tmp
+**/*.temp
+**/.DS_Store
+**/Thumbs.db
+
+# Ignorar arquivos de documentação
+README.md
+LICENSE
+**/*.md
+
+# Ignorar arquivos de configuração local
+**/.vscode/
+**/.idea/
+
+# Ignorar logs
+**/logs/
+**/*.log

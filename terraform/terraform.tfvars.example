@@ -1,0 +1,19 @@
+# Copie este arquivo para terraform.tfvars e ajuste os valores conforme necessário
+
+# Configurações gerais
+project_name = "aula-sistemas-backend"
+environment  = "prod"
+aws_region   = "us-east-1"
+
+# Configurações de rede
+vpc_cidr             = "10.32.0.0/16"
+public_subnet_cidrs  = ["10.32.1.0/24", "10.32.2.0/24"]
+
+# Configurações da aplicação
+container_port      = 8080
+health_check_path   = "/"
+
+# Configurações do Fargate
+fargate_cpu    = "512"   # 256, 512, 1024, 2048, 4096
+fargate_memory = "1024"  # Deve ser compatível com CPU
+app_count      = 2       # Número de instâncias
