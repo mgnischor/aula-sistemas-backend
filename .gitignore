@@ -1,0 +1,6 @@
+*.dll
+*.exe
+*.pdb
+
+[Bb]in/*
+[Oo]bj/*

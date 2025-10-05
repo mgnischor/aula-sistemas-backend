@@ -10,14 +10,14 @@
         "projectUniqueName": "D:\\GITHUB\\aula-sistemas-backend\\aula-sistemas-backend.csproj",
         "projectName": "aula-sistemas-backend",
         "projectPath": "D:\\GITHUB\\aula-sistemas-backend\\aula-sistemas-backend.csproj",
-        "packagesPath": "C:\\Users\\Miguel Nischor\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\WORK\\.nuget\\packages\\",
         "outputPath": "D:\\GITHUB\\aula-sistemas-backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Miguel Nischor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\WORK\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -54,6 +54,10 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.9, )"
+            },
+            "StackExchange.Redis": {
+              "target": "Package",
+              "version": "[2.9.25, )"
             }
           },
           "imports": [
