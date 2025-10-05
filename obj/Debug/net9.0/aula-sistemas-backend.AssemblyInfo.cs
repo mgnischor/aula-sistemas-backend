@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("aula-sistemas-backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eb1e99d6d54dec523a0ba6aa37ac8be8a5edea9b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dae5cd8e84169f6661fb907d69f157422cb75bc8")]
 [assembly: System.Reflection.AssemblyProductAttribute("aula-sistemas-backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("aula-sistemas-backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

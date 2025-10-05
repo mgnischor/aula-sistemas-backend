@@ -13,7 +13,11 @@ public_subnet_cidrs  = ["10.32.1.0/24", "10.32.2.0/24"]
 container_port      = 8080
 health_check_path   = "/"
 
-# Configurações do Fargate
-fargate_cpu    = "512"   # 256, 512, 1024, 2048, 4096
-fargate_memory = "1024"  # Deve ser compatível com CPU
-app_count      = 2       # Número de instâncias
+# Configurações do Fargate (otimizado para economia)
+fargate_cpu    = "256"   # 256, 512, 1024, 2048, 4096 - Reduzido para economizar
+fargate_memory = "512"   # Deve ser compatível com CPU - Reduzido para economizar
+app_count      = 1       # Número de instâncias - Use 1 para dev/staging, 2+ para produção
+
+# Configurações de logs e segurança
+log_retention_days = 3      # Dias de retenção dos logs (3-7 dias para economia)
+enable_ecr_scan    = false  # Scan de segurança ECR (false para economizar)

@@ -47,17 +47,29 @@ variable "health_check_path" {
 variable "fargate_cpu" {
   description = "CPU do Fargate (256, 512, 1024, 2048, 4096)"
   type        = string
-  default     = "512"
+  default     = "256"  # Reduzido de 512 para economizar custos
 }
 
 variable "fargate_memory" {
   description = "Memória do Fargate em MiB"
   type        = string
-  default     = "1024"
+  default     = "512"  # Reduzido de 1024 para economizar custos
 }
 
 variable "app_count" {
   description = "Número de instâncias da aplicação"
   type        = number
-  default     = 2
+  default     = 1  # Reduzido de 2 para economizar custos
+}
+
+variable "log_retention_days" {
+  description = "Dias de retenção dos logs do CloudWatch"
+  type        = number
+  default     = 3  # Reduzido de 7 para economizar custos
+}
+
+variable "enable_ecr_scan" {
+  description = "Habilitar scan de segurança no ECR (gera custos)"
+  type        = bool
+  default     = false  # Desabilitado para economizar custos
 }

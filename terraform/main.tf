@@ -152,7 +152,7 @@ resource "aws_ecr_repository" "app" {
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
-    scan_on_push = true
+    scan_on_push = var.enable_ecr_scan  # Controlado por variável para economizar custos
   }
 
   tags = {
@@ -169,11 +169,11 @@ resource "aws_ecr_lifecycle_policy" "app" {
     rules = [
       {
         rulePriority = 1
-        description  = "Keep last 10 images"
+        description  = "Keep last 5 images"  # Reduzido de 10 para 5 para economizar armazenamento
         selection = {
           tagStatus   = "any"
           countType   = "imageCountMoreThan"
-          countNumber = 10
+          countNumber = 5
         }
         action = {
           type = "expire"
@@ -246,7 +246,7 @@ resource "aws_ecs_cluster" "main" {
       logging = "OVERRIDE"
 
       log_configuration {
-        cloud_watch_encryption_enabled = true
+        cloud_watch_encryption_enabled = false  # Desabilitado para economizar custos
         cloud_watch_log_group_name     = aws_cloudwatch_log_group.ecs.name
       }
     }
@@ -261,7 +261,7 @@ resource "aws_ecs_cluster" "main" {
 # CloudWatch Log Group
 resource "aws_cloudwatch_log_group" "ecs" {
   name              = "/ecs/${var.project_name}"
-  retention_in_days = 7
+  retention_in_days = var.log_retention_days  # Controlado por variável, padrão 3 dias
 
   tags = {
     Name        = "${var.project_name}-logs"
