@@ -1,4 +1,6 @@
 using System.Text.Json;
+using aula_sistemas_backend.Models;
+using aula_sistemas_backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using StackExchange.Redis;
 
@@ -10,24 +12,21 @@ namespace aula_sistemas_backend.Controllers
     {
         private readonly IConnectionMultiplexer _redis;
         private readonly IDatabase _db;
+        private readonly IRabbitMQService _rabbitMQService;
+        private readonly ILogger<PessoaController> _logger;
         private const string REDIS_KEY_PREFIX = "pessoa:";
         private const string REDIS_ALL_KEY = "pessoas:all";
 
-        public PessoaController(IConnectionMultiplexer redis)
+        public PessoaController(
+            IConnectionMultiplexer redis,
+            IRabbitMQService rabbitMQService,
+            ILogger<PessoaController> logger
+        )
         {
             _redis = redis;
             _db = _redis.GetDatabase();
-        }
-
-        // Modelo de dados
-        public class Pessoa
-        {
-            public Guid Id { get; set; }
-            public string Nome { get; set; }
-            public string Email { get; set; }
-            public string Telefone { get; set; }
-            public int? Idade { get; set; }
-            public string Endereco { get; set; }
+            _rabbitMQService = rabbitMQService;
+            _logger = logger;
         }
 
         // Simulação de armazenamento em memória
@@ -96,6 +95,16 @@ namespace aula_sistemas_backend.Controllers
             // Invalida o cache da lista completa
             await _db.KeyDeleteAsync(REDIS_ALL_KEY);
 
+            // Publica evento no RabbitMQ
+            var pessoaEvent = new PessoaEvent
+            {
+                EventType = "CREATE",
+                Pessoa = pessoa,
+                Timestamp = DateTime.UtcNow,
+            };
+            _rabbitMQService.PublishMessage(pessoaEvent, "pessoa.create");
+            _logger.LogInformation("Evento de criação publicado para pessoa: {Id}", pessoa.Id);
+
             return CreatedAtAction(nameof(GetById), new { id = pessoa.Id }, pessoa);
         }
 
@@ -120,6 +129,16 @@ namespace aula_sistemas_backend.Controllers
             // Invalida o cache da lista completa
             await _db.KeyDeleteAsync(REDIS_ALL_KEY);
 
+            // Publica evento no RabbitMQ
+            var pessoaEvent = new PessoaEvent
+            {
+                EventType = "UPDATE",
+                Pessoa = pessoa,
+                Timestamp = DateTime.UtcNow,
+            };
+            _rabbitMQService.PublishMessage(pessoaEvent, "pessoa.update");
+            _logger.LogInformation("Evento de atualização publicado para pessoa: {Id}", id);
+
             return NoContent();
         }
 
@@ -138,6 +157,16 @@ namespace aula_sistemas_backend.Controllers
 
             // Invalida o cache da lista completa
             await _db.KeyDeleteAsync(REDIS_ALL_KEY);
+
+            // Publica evento no RabbitMQ
+            var pessoaEvent = new PessoaEvent
+            {
+                EventType = "DELETE",
+                Pessoa = pessoa,
+                Timestamp = DateTime.UtcNow,
+            };
+            _rabbitMQService.PublishMessage(pessoaEvent, "pessoa.delete");
+            _logger.LogInformation("Evento de exclusão publicado para pessoa: {Id}", id);
 
             return NoContent();
         }

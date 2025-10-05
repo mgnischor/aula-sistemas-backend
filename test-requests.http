@@ -1,0 +1,104 @@
+### Configuração
+@baseUrl = http://localhost:5000
+@contentType = application/json
+
+### Listar todas as pessoas
+GET {{baseUrl}}/api/v1/pessoas
+
+### Criar uma nova pessoa
+# @name createPessoa
+POST {{baseUrl}}/api/v1/pessoas
+Content-Type: {{contentType}}
+
+{
+  "nome": "Maria Silva",
+  "email": "maria.silva@email.com",
+  "telefone": "(11) 98765-4321",
+  "idade": 28,
+  "endereco": "Rua das Flores, 123 - São Paulo, SP"
+}
+
+### Extrair ID da resposta anterior
+@pessoaId = {{createPessoa.response.body.$.id}}
+
+### Buscar pessoa por ID
+GET {{baseUrl}}/api/v1/pessoas/{{pessoaId}}
+
+### Atualizar pessoa
+PUT {{baseUrl}}/api/v1/pessoas/{{pessoaId}}
+Content-Type: {{contentType}}
+
+{
+  "nome": "Maria Silva Santos",
+  "email": "maria.santos@email.com",
+  "telefone": "(11) 91234-5678",
+  "idade": 29,
+  "endereco": "Av. Paulista, 1000 - São Paulo, SP"
+}
+
+### Deletar pessoa
+DELETE {{baseUrl}}/api/v1/pessoas/{{pessoaId}}
+
+### -----------------------------------------------------------
+### Testes com múltiplas pessoas
+
+### Criar Pessoa 1
+POST {{baseUrl}}/api/v1/pessoas
+Content-Type: {{contentType}}
+
+{
+  "nome": "João Pedro",
+  "email": "joao.pedro@email.com",
+  "telefone": "(21) 99876-5432",
+  "idade": 35,
+  "endereco": "Rua do Comércio, 456 - Rio de Janeiro, RJ"
+}
+
+### Criar Pessoa 2
+POST {{baseUrl}}/api/v1/pessoas
+Content-Type: {{contentType}}
+
+{
+  "nome": "Ana Carolina",
+  "email": "ana.carolina@email.com",
+  "telefone": "(31) 98765-1234",
+  "idade": 42,
+  "endereco": "Av. Afonso Pena, 789 - Belo Horizonte, MG"
+}
+
+### Criar Pessoa 3
+POST {{baseUrl}}/api/v1/pessoas
+Content-Type: {{contentType}}
+
+{
+  "nome": "Carlos Eduardo",
+  "email": "carlos.eduardo@email.com",
+  "telefone": "(85) 97654-3210",
+  "idade": 31,
+  "endereco": "Rua da Praia, 321 - Fortaleza, CE"
+}
+
+### Listar todas após criações
+GET {{baseUrl}}/api/v1/pessoas
+
+### -----------------------------------------------------------
+### Teste com ID específico (substitua pelo ID real)
+@testId = 00000000-0000-0000-0000-000000000000
+
+### Buscar por ID específico
+GET {{baseUrl}}/api/v1/pessoas/{{testId}}
+
+### Atualizar por ID específico
+PUT {{baseUrl}}/api/v1/pessoas/{{testId}}
+Content-Type: {{contentType}}
+
+{
+  "nome": "Pessoa Atualizada",
+  "email": "pessoa.atualizada@email.com",
+  "telefone": "(99) 99999-9999",
+  "idade": 99,
+  "endereco": "Endereço Atualizado"
+}
+
+### Deletar por ID específico
+DELETE {{baseUrl}}/api/v1/pessoas/{{testId}}

@@ -1,3 +1,4 @@
+using aula_sistemas_backend.Services;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,10 @@ var redisConnectionString = builder.Configuration["Redis:ConnectionString"];
 builder.Services.AddSingleton<IConnectionMultiplexer>(
     ConnectionMultiplexer.Connect(redisConnectionString!)
 );
+
+// Configure RabbitMQ
+builder.Services.AddSingleton<IRabbitMQService, RabbitMQService>();
+builder.Services.AddHostedService<RabbitMQConsumerService>();
 
 // Configure CORS
 builder.Services.AddCors(options =>

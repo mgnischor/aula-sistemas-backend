@@ -1,6 +1,26 @@
-version: '3.8'
+version: "3.8"
 
 services:
+  rabbitmq:
+    image: rabbitmq:4.1.4-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672" # Porta AMQP
+      - "15672:15672" # Porta Management UI
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - app-network
+
   aula-sistemas-backend:
     build: .
     ports:
@@ -12,8 +32,14 @@ services:
       # Para desenvolvimento, monte o código fonte (opcional)
       - ./appsettings.Development.json:/app/appsettings.Development.json:ro
     restart: unless-stopped
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
     networks:
       - app-network
+
+volumes:
+  rabbitmq_data:
 
 networks:
   app-network:

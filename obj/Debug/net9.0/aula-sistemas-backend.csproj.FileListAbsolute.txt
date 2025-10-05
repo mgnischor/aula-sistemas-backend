@@ -33,3 +33,4 @@ D:\GITHUB\aula-sistemas-backend\obj\Debug\net9.0\ref\aula-sistemas-backend.dll
 D:\GITHUB\aula-sistemas-backend\bin\Debug\net9.0\Pipelines.Sockets.Unofficial.dll
 D:\GITHUB\aula-sistemas-backend\bin\Debug\net9.0\StackExchange.Redis.dll
 D:\GITHUB\aula-sistemas-backend\obj\Debug\net9.0\aula-sistemas-backend.sourcelink.json
+D:\GITHUB\aula-sistemas-backend\bin\Debug\net9.0\RabbitMQ.Client.dll
